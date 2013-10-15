@@ -43,48 +43,51 @@
   };
 
 
-  // Cut the mustard
-  if ( !Array.prototype.forEach ) {
-    
-    // Add legacy class for older browsers
-    document.getElementsByTagName('body')[0].className+=' legacy';
+  function initEvents() {
+    // Cut the mustard
+    if ( !Array.prototype.forEach ) {
 
-  } else {
+      // Add legacy class for older browsers
+      document.getElementsByTagName('body')[0].className+=' legacy';
 
-    // View Source Toggle
-    [].forEach.call( document.querySelectorAll('.sg-btn--source'), function(el) {
-      el.onclick = function() {
-        var that = this;
-        var sourceCode = that.parentNode.nextElementSibling;
-        toggleClass(sourceCode, 'is-active');
-        return false;
-      };
-    }, false);
+    } else {
 
-    // Select Code Button
-    [].forEach.call( document.querySelectorAll('.sg-btn--select'), function(el) {
-      el.onclick = function() {
-        selectText(this.nextSibling);
-        toggleClass(this, 'is-active');
-        return false;
-      };
-    }, false);
+      // View Source Toggle
+      [].forEach.call( document.querySelectorAll('.sg-btn--source'), function(el) {
+        el.onclick = function() {
+          var that = this;
+          var sourceCode = that.parentNode.nextElementSibling;
+          toggleClass(sourceCode, 'is-active');
+          return false;
+        };
+      }, false);
+
+      // Select Code Button
+      [].forEach.call( document.querySelectorAll('.sg-btn--select'), function(el) {
+        el.onclick = function() {
+          selectText(this.nextSibling);
+          toggleClass(this, 'is-active');
+          return false;
+        };
+      }, false);
+    }
   }
 
-  
+  initEvents();
+
   // Add operamini class to body
   if (window.operamini) {
-    document.getElementsByTagName('body')[0].className+=' operamini';    
-  } 
+    document.getElementsByTagName('body')[0].className+=' operamini';
+  }
   // Opera Mini has trouble with these enhancements
   // So we'll make sure they don't get them
   else {
     // Init prettyprint
     prettyPrint();
-  
+
     // Get nav form
     var nav = document.getElementById('js-sg-section-switcher');
-    
+
     // Toggle active class on navToggle click
     nav.onchange = function() {
       var val = this.value;
@@ -93,5 +96,7 @@
       }
     };
   }
- 
+  window.styleGuide = {
+    initEvents: initEvents
+  };
  })(document);
